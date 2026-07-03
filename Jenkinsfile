@@ -38,7 +38,7 @@ node {
     returnStdout: true,
     script: """
 "${sfCli}" project deploy start ^
---manifest manifest/package.xml ^
+ --source-dir force-app ^
 --target-org ${HUB_ORG}
 """
 )
