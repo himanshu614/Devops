@@ -16,7 +16,7 @@ node {
     println HUB_ORG
     println SFDC_HOST
     println CONNECTED_APP_CONSUMER_KEY
-    def toolbelt = 'C:\\Program Files\\sf\\bin\\sf.cmd'
+    def sfCli = 'C:\\Program Files\\sf\\bin\\sf.cmd'
 
     stage('checkout source') {
         // when running in multi-branch job, one must issue this command
@@ -28,11 +28,11 @@ node {
             def rc
             if (isUnix()) {
                 // SFDX: auth:jwt:grant --> SF: org:login:jwt
-                rc = sh returnStatus: true, script: "${toolbelt} org login jwt --client-id ${CONNECTED_APP_CONSUMER_KEY} --username ${HUB_ORG} --jwt-key-file ${jwt_key_file} --set-default-dev-hub --instance-url ${SFDC_HOST}"
+                rc = sh returnStatus: true, script: "${sfCli} org login jwt --client-id ${CONNECTED_APP_CONSUMER_KEY} --username ${HUB_ORG} --jwt-key-file ${jwt_key_file} --set-default-dev-hub --instance-url ${SFDC_HOST}"
             }else{
-                //bat "${toolbelt} plugins:install salesforcedx@49.5.0"
-                //bat "${toolbelt} update"
-                //bat "${toolbelt} auth:logout -u ${HUB_ORG} -p" 
+                //bat "${sfCli} plugins:install salesforcedx@49.5.0"
+                //bat "${sfCli} update"
+                //bat "${sfCli} auth:logout -u ${HUB_ORG} -p" 
                 // SFDX: auth:jwt:grant --> SF: org:login:jwt
                 rmsg = bat(
     returnStdout: true,
@@ -58,10 +58,10 @@ node {
             def rmsg
             if (isUnix()) {
                 // SFDX: force:source:deploy --> SF: project:deploy:start
-                rmsg = sh returnStdout: true, script: "${toolbelt} project deploy start --manifest manifest/package.xml --target-org ${HUB_ORG}"
+                rmsg = sh returnStdout: true, script: "${sfCli} project deploy start --manifest manifest/package.xml --target-org ${HUB_ORG}"
             }else{
                 // SFDX: force:source:deploy --> SF: project:deploy:start
-                rmsg = bat returnStdout: true, script: "${toolbelt} project deploy start --manifest manifest/package.xml --target-org ${HUB_ORG}"
+                rmsg = bat returnStdout: true, script: "${sfCli} project deploy start --manifest manifest/package.xml --target-org ${HUB_ORG}"
             }
               
             // error - old sfdx printf rmsg
