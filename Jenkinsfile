@@ -16,7 +16,7 @@ node {
     println HUB_ORG
     println SFDC_HOST
     println CONNECTED_APP_CONSUMER_KEY
-    def toolbelt = 'sf'
+    def toolbelt = '"C:\\Program Files\\sf\\bin\\sf.cmd"'
 
     stage('checkout source') {
         // when running in multi-branch job, one must issue this command
