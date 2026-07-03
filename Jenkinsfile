@@ -34,7 +34,14 @@ node {
                 //bat "${toolbelt} update"
                 //bat "${toolbelt} auth:logout -u ${HUB_ORG} -p" 
                 // SFDX: auth:jwt:grant --> SF: org:login:jwt
-                rc = bat returnStatus: true, script: "\"${toolbelt}\" org login jwt --client-id ${CONNECTED_APP_CONSUMER_KEY} --username ${HUB_ORG} --jwt-key-file \"${jwt_key_file}\" --set-default-dev-hub --instance-url ${SFDC_HOST}"
+                rmsg = bat(
+    returnStdout: true,
+    script: """
+"${sfCli}" project deploy start ^
+--manifest manifest/package.xml ^
+--target-org ${HUB_ORG}
+"""
+)
             }
         
             if (rc != 0) { 
