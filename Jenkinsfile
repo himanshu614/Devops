@@ -58,10 +58,10 @@ node {
             def rmsg
             if (isUnix()) {
                 // SFDX: force:source:deploy --> SF: project:deploy:start
-                rmsg = sh returnStdout: true, script: "${sfCli} project deploy start --manifest manifest/package.xml --target-org ${HUB_ORG}"
+                rmsg = sh returnStdout: true, script: "${sfCli} project deploy start --source-dir force-app --target-org ${HUB_ORG}"
             }else{
                 // SFDX: force:source:deploy --> SF: project:deploy:start
-                rmsg = bat returnStdout: true, script: "${sfCli} project deploy start --manifest manifest/package.xml --target-org ${HUB_ORG}"
+                rmsg = bat returnStdout: true, script: "${sfCli} project deploy start --source-dir force-app --target-org ${HUB_ORG}"
             }
               
             // error - old sfdx printf rmsg
